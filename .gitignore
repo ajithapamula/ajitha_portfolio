@@ -1,0 +1,45 @@
+# Ignore virtual environments
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# Ignore VS Code / PyCharm config
+.vscode/
+.idea/
+
+# Ignore environment variable files
+.env
+.env.*
+
+# Ignore Python egg info
+*.egg-info/
+
+# Ignore model weights or large data
+*.h5
+*.pkl
+*.ckpt
+*.pt
+*.onnx
+
+# Ignore streamlit's generated config
+.streamlit/config.toml
+
+# Ignore secrets or token files
+secrets.*
