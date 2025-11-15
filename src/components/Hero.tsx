@@ -30,14 +30,18 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="hover-glow">
-                <Mail className="mr-2 h-5 w-5" />
-                Contact Me
-              </Button>
-              <Button size="lg" variant="secondary">
-                <Download className="mr-2 h-5 w-5" />
-                Resume
-              </Button>
+              <a href="#contact">
+                <Button size="lg" className="hover-glow">
+                  <Mail className="mr-2 h-5 w-5" />
+                  Contact Me
+                </Button>
+              </a>
+              <a href="/Ajitha_Pamula.pdf" download="Ajitha_Pamula_Resume.pdf">
+                <Button size="lg" variant="secondary">
+                  <Download className="mr-2 h-5 w-5" />
+                  Resume
+                </Button>
+              </a>
             </div>
             
             <div className="flex gap-4 pt-4">

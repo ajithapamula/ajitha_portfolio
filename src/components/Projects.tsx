@@ -19,7 +19,7 @@ const Projects = () => {
         "Deployed scalable microservices on AWS using Docker",
       ],
       image: aiEvaluatorImg,
-      github: "#",
+      github: "https://github.com/ajithapamula/ai_evaluator",
     },
     {
       title: "Edu-App – AI-Powered Voice Interview & Learning Platform",
@@ -31,7 +31,7 @@ const Projects = () => {
         "Deployed cloud-ready, containerized services",
       ],
       image: eduAppImg,
-      github: "#",
+      github: "https://github.com/ajithapamula/Edu-App",
     },
     {
       title: "AI Video Transcription & Summarization",
@@ -55,7 +55,7 @@ const Projects = () => {
         "Created deployable production pipeline",
       ],
       image: fakeNewsImg,
-      github: "#",
+      github: "https://github.com/ajithapamula/Fake-news-detection",
     },
   ];
 
