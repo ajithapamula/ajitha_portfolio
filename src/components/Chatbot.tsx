@@ -16,7 +16,7 @@ const Chatbot = () => {
     {
       role: "assistant",
       content:
-        "Hi! I'm Ajitha's AI assistant. Ask me anything about her skills, projects, or experience!",
+        "Hello! 👋 I'm Ajitha’s AI Assistant. How can I help you today?",
     },
   ]);
 
@@ -26,98 +26,138 @@ const Chatbot = () => {
   const { toast } = useToast();
 
   // ----------------------------------------------------------
-  // FULL RESUME DETAILS (SAFE – NO API KEYS)
+  // AJITHA’S AI ENGINEER RESUME (CLEAN VERSION)
   // ----------------------------------------------------------
   const RESUME_DATA = `
-🔹 **Name:** Ajitha Pamula
-🔹 **Role:** AI Engineer / AI Developer
-🔹 **Location:** Hyderabad, India  
-🔹 **Email:** pamulaajitha04@gmail.com  
-🔹 **LinkedIn:** linkedin.com/in/ajithapamula  
-🔹 **GitHub:** github.com/ajithapamula  
+NAME: Ajitha Pamula
+ROLE: AI Engineer / Agentic AI Developer
+LOCATION: Hyderabad, India
+EMAIL: pamulaajitha04@gmail.com
 
 ────────────────────────────
-🎓 **EDUCATION**
-B.Sc in Mathematics, Cloud Computing, Computer Science
+SUMMARY
+AI Engineer specializing in:
+• Large Language Models (LLMs)
+• Agentic AI (LangChain, CrewAI, LangGraph)
+• RAG pipelines & vector DBs
+• Multi-agent automation systems
+• Whisper → LLM voice pipelines
+• FastAPI microservices
+• Docker deployments
+• AWS & Azure cloud
+• Machine Learning, NLP, Computer Vision
 
 ────────────────────────────
-💼 **EXPERIENCE — AI Engineer, Lanciere Technologies**
-- Builds LLM applications (RAG, Agents, Multi-agent systems)  
-- Whisper → Text → LLM pipelines  
-- FastAPI, MongoDB, Docker microservices  
-- AWS / Azure cloud deployments  
-- RAG optimization, embeddings, vector search  
+SKILLS
+Python, SQL,
+Machine Learning (Classification, Regression),
+Deep Learning (Neural Networks),
+TensorFlow, PyTorch,
+NLP, Computer Vision,
+LangChain, CrewAI, LangGraph, MCP,
+RAG: ChromaDB, Pinecone, FAISS,
+FastAPI, Docker, Linux,
+MongoDB, PostgreSQL,
+AWS, Azure
 
 ────────────────────────────
-🧠 **SKILLS**
-Python, SQL, TensorFlow, PyTorch, NLP, CV, RAG, LangChain, CrewAI, LangGraph, Llama models,
-FastAPI, Streamlit, Docker, MongoDB, ChromaDB, AWS, Azure, React, Vite, Tailwind.
+EXPERIENCE
+AI Engineer — Lanciere Technologies (2025–Present)
+• Built multi-agent AI systems for automation
+• RAG pipelines with vector DBs
+• Whisper STT → LLM conversational systems
+• FastAPI microservices deployed via Docker
+• Cloud deployments on AWS & Azure
+• Developed LLM-based evaluation systems
 
 ────────────────────────────
-📌 **PROJECTS (with steps + tech)**
+PROJECTS
 
-1️⃣ **AI Evaluator — Multi-Agent Code Review**
-One-liner: Automatically checks answers or code and gives a score.  
-Steps:  
-1. Upload the code or answer  
-2. AI reads and analyzes it  
-3. Different small agents evaluate different parts  
-4. Final score and feedback shown on screen  
-Tech: LangChain, FastAPI, Docker  
+1. AI Evaluator — Multi-Agent Code Review
+• Code Agent, Design Agent, Aggregator
+• Tech: LangChain, LangGraph, FastAPI, Docker, AWS
 
-2️⃣ **Edu-App — Voice Interview Platform**  
-One-liner: Record voice answers and get instant AI feedback.  
-Steps:  
-1. Record your voice  
-2. Speech → text (Whisper)  
-3. AI evaluates your answer  
-4. Gives feedback + suggestions  
-Tech: Whisper, FastAPI, MongoDB  
+2. Edu-App — AI Voice Interview Platform
+• Whisper → Text → LLM evaluation
+• MCQs, theory answers, pseudocode scoring
+• MongoDB + PostgreSQL pipelines
+• Cloud-ready Docker microservices
 
-3️⃣ **Fake News Detection — ML Classifier**  
-One-liner: Predicts whether news is Real or Fake.  
-Steps:  
-1. User enters article text  
-2. Text is cleaned & tokenized  
-3. TF-IDF model predicts Real/Fake  
-4. Shows confidence score  
-Tech: TF-IDF, Logistic Regression  
-
-4️⃣ **E-commerce EDA Dashboard**  
-One-liner: Visual dashboard for sales performance analysis.  
-Steps:  
-1. Load customer and sales data  
-2. Clean & transform  
-3. Build visual charts  
-4. Show insights & patterns  
-Tech: Power BI, Tableau  
+3. Fake News Detection — ML Pipeline
+• TF-IDF + Logistic Regression / SVM
+• 99% accuracy on benchmark data
 
 ────────────────────────────
-RULES:  
-- “your skills” = Ajitha’s skills  
-- “your projects” = Ajitha’s projects  
-- “your experience” = Ajitha’s experience  
-- If question not related to her → say:  
-  **"This information is not available in Ajitha’s profile."**
+EDUCATION
+B.Sc (Maths, Cloud Computing, Computer Science)
+Government Women's College, Guntur
   `;
 
   // ----------------------------------------------------------
-  // TEMPORARY OFFLINE MODE — NO API KEY LEAK
+  // Helper: Extract section by keyword
   // ----------------------------------------------------------
-  const offlineAnswer = (question: string) => {
-    const q = question.toLowerCase();
+  const extractSection = (keyword: string) => {
+    const lower = keyword.toLowerCase();
 
-    if (q.includes("skill")) return "Here are Ajitha’s skills:\n\n" + RESUME_DATA.match(/🧠([\s\S]*?)────────────────────────────/)?.[1];
-    if (q.includes("project")) return "Here are Ajitha’s projects:\n\n" + RESUME_DATA.match(/📌([\s\S]*)/)?.[1];
-    if (q.includes("experience")) return "Here is Ajitha’s experience:\n\n" + RESUME_DATA.match(/💼([\s\S]*?)────────────────────────────/)?.[1];
-    if (q.includes("education")) return "Education:\n\n" + RESUME_DATA.match(/🎓([\s\S]*?)────────────────────────────/)?.[1];
-    if (q.includes("about")) return "Here is a summary about Ajitha:\n\n" + RESUME_DATA.split("────────────────────────────")[0];
+    if (lower.includes("skill"))
+      return RESUME_DATA.match(/SKILLS([\s\S]*?)────────────────────────────/)?.[1] || "No skills found.";
+
+    if (lower.includes("project"))
+      return RESUME_DATA.match(/PROJECTS([\s\S]*?)────────────────────────────/)?.[1] || "No projects found.";
+
+    if (lower.includes("experience"))
+      return RESUME_DATA.match(/EXPERIENCE([\s\S]*?)────────────────────────────/)?.[1] || "No experience found.";
+
+    if (lower.includes("education"))
+      return RESUME_DATA.match(/EDUCATION([\s\S]*)/)?.[1] || "No education found.";
+
+    if (lower.includes("summary") || lower.includes("about"))
+      return RESUME_DATA.match(/SUMMARY([\s\S]*?)────────────────────────────/)?.[1] || "No summary found.";
 
     return "This information is not available in Ajitha’s profile.";
   };
 
   // ----------------------------------------------------------
-  // SEND MESSAGE (SAFE – NO API CALL)
+  // SMART GREETING ENGINE
+  // ----------------------------------------------------------
+  const offlineAnswer = (question: string) => {
+    const q = question.toLowerCase().trim();
+
+    // Basic greetings
+    const greetingWords = ["hi", "hello", "hey", "hii", "hai", "hlo", "yo", "sup", "what's up", "whats up"];
+
+    if (greetingWords.includes(q)) {
+      return "Hello! 👋 How can I support you today?";
+    }
+
+    // Time-based greetings
+    if (q.includes("good morning")) {
+      return "Good morning! ☀️ How can I assist you today?";
+    }
+
+    if (q.includes("good afternoon")) {
+      return "Good afternoon! 😊 What can I help you with?";
+    }
+
+    if (q.includes("good evening")) {
+      return "Good evening! 🌙 How can I support you?";
+    }
+
+    if (q.includes("good night")) {
+      return "Good night! 🌙 Take care. Let me know if you need anything before you sleep.";
+    }
+
+    // Conversation
+    if (q.includes("how are you")) {
+      return "I'm doing great! 😊 Thanks for asking. How can I help you today?";
+    }
+
+    // Resume-related questions
+    return extractSection(question);
+  };
+
+  // ----------------------------------------------------------
+  // SEND MESSAGE
   // ----------------------------------------------------------
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
@@ -161,7 +201,7 @@ RULES:
   };
 
   // ----------------------------------------------------------
-  // UI
+  // UI (unchanged)
   // ----------------------------------------------------------
   return (
     <>
@@ -206,7 +246,7 @@ RULES:
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about Ajitha..."
+                placeholder="Ask something about Ajitha…"
                 disabled={isLoading}
               />
               <Button onClick={sendMessage} disabled={!input.trim() || isLoading} size="icon">
