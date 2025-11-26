@@ -29,12 +29,7 @@ const Contact = () => {
       value: "pamulaajitha04@gmail.com",
       href: "mailto:pamulaajitha04@gmail.com",
     },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 6309649332",
-      href: "tel:+916309649332",
-    },
+
     {
       icon: MapPin,
       label: "Location",
