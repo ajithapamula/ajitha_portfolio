@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================= BASE THEME ================= */
+
+@layer base {
+  :root {
+    --background: 220 20% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 189 94% 55%;
+    --primary-foreground: 220 20% 6%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 15% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 270 91% 65%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 189 94% 55%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  code,
+  pre {
+    font-family: "JetBrains Mono", monospace;
+  }
+}
+
+/* ================= UTILITIES ================= */
+
+@layer utilities {
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-xl;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-cyan-400 to-accent bg-clip-text text-transparent;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 30px hsl(189 94% 55% / 0.5),
+      0 0 60px hsl(270 91% 65% / 0.3);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
