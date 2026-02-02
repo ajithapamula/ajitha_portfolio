@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Send, BrainCircuit, Sparkles, Linkedin, Github, Loader2 } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  Send,
+  BrainCircuit,
+  Sparkles,
+  Linkedin,
+  Github,
+} from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const Contact = () => {
@@ -11,221 +18,144 @@ const Contact = () => {
     projectType: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    setIsSubmitting(true);
+    const subject = `New Contact from Portfolio (${formData.projectType || "General"})`;
+    const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+Project Type: ${formData.projectType || "Not specified"}
 
-    try {
-      const { data, error } = await supabase.functions.invoke("send-email", {
-        body: formData,
-      });
+Message:
+${formData.message}
+    `;
 
-      if (error) throw error;
+    window.location.href = `mailto:pamulaajitha04@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
 
-      if (data?.success) {
-        toast.success("Message sent successfully! I'll get back to you soon.");
-        setFormData({ name: "", email: "", projectType: "", message: "" });
-      } else {
-        throw new Error(data?.error || "Failed to send message");
-      }
-    } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error("Failed to send message. Please try again or email me directly.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    toast.success("Opening email client...");
   };
 
   return (
-    <section className="py-24 px-6 relative">
+    <section id="contact" className="py-24 px-6 relative">
       <div className="absolute inset-0 neural-grid opacity-30" />
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-accent/5 via-primary/5 to-transparent" />
-      
+
       <div className="max-w-4xl mx-auto relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6">
             <BrainCircuit className="w-4 h-4 text-primary" />
             <span className="text-sm text-muted-foreground">Get In Touch</span>
           </div>
+
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-gradient">Let's Build </span>
             <span className="text-gradient-purple">AI Together</span>
           </h2>
+
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Ready to transform your ideas into intelligent systems? Let's discuss your AI vision.
+            Ready to transform your ideas into intelligent systems? Let's talk.
           </p>
         </div>
 
-        {/* Contact Card */}
-        <div className="glass-card glow-box p-8 md:p-12">
+        <div className="glass-card p-8 md:p-12">
           <div className="grid md:grid-cols-2 gap-12">
-            {/* Left Side - Info */}
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-foreground mb-4">
-                  Contact Information
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Whether you need a custom <span className="text-primary">LLM solution</span>, 
-                  <span className="text-accent"> RAG pipeline</span>, or Agentic AI system, 
-                  I'm here to help bring your vision to life.
-                </p>
+            {/* Info */}
+            <div className="space-y-6">
+              <a
+                href="mailto:pamulaajitha04@gmail.com"
+                className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30"
+              >
+                <Mail className="w-5 h-5 text-primary" />
+                <span className="text-foreground">pamulaajitha04@gmail.com</span>
+              </a>
+
+              <div className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30">
+                <MapPin className="w-5 h-5 text-accent" />
+                <span className="text-foreground">Hyderabad, India</span>
               </div>
 
-              <div className="space-y-4">
-                <a 
-                  href="mailto:pamulaajitha04@gmail.com"
-                  className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="text-foreground font-medium">pamulaajitha04@gmail.com</p>
-                  </div>
-                </a>
+              <a
+                href="https://linkedin.com/in/ajithapamula"
+                target="_blank"
+                className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30"
+              >
+                <Linkedin className="w-5 h-5 text-primary" />
+                <span className="text-foreground">LinkedIn</span>
+              </a>
 
-                <div className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="text-foreground font-medium">Hyderabad, India</p>
-                  </div>
-                </div>
+              <a
+                href="https://github.com/ajithapamula"
+                target="_blank"
+                className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30"
+              >
+                <Github className="w-5 h-5 text-accent" />
+                <span className="text-foreground">GitHub</span>
+              </a>
 
-                <a 
-                  href="https://linkedin.com/in/ajithapamula"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Linkedin className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">LinkedIn</p>
-                    <p className="text-foreground font-medium">linkedin.com/in/ajithapamula</p>
-                  </div>
-                </a>
-
-                <a 
-                  href="https://github.com/ajithapamula"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-                    <Github className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">GitHub</p>
-                    <p className="text-foreground font-medium">github.com/ajithapamula</p>
-                  </div>
-                </a>
-              </div>
-
-              {/* Status Badge */}
-              <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
-                <Sparkles className="w-6 h-6 text-accent" />
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-accent/10">
+                <Sparkles className="w-5 h-5 text-accent" />
                 <div>
-                  <p className="text-sm font-medium text-foreground">Available for Work</p>
-                  <p className="text-xs text-muted-foreground">Open to AI/ML projects and collaborations</p>
+                  <p className="font-medium">Available for Work</p>
+                  <p className="text-xs text-muted-foreground">
+                    Open to AI/ML projects & collaborations
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Side - Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground disabled:opacity-50"
-                />
-              </div>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <input
+                placeholder="Name *"
+                className="w-full px-4 py-3 rounded-lg bg-secondary/50"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
 
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground disabled:opacity-50"
-                />
-              </div>
+              <input
+                placeholder="Email *"
+                className="w-full px-4 py-3 rounded-lg bg-secondary/50"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
 
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Project Type
-                </label>
-                <select 
-                  value={formData.projectType}
-                  onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                  disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground disabled:opacity-50"
-                >
-                  <option value="">Select a category</option>
-                  <option value="LLM / Generative AI">LLM / Generative AI</option>
-                  <option value="RAG Pipeline Development">RAG Pipeline Development</option>
-                  <option value="Agentic AI Systems">Agentic AI Systems</option>
-                  <option value="Computer Vision">Computer Vision</option>
-                  <option value="ML Model Development">ML Model Development</option>
-                  <option value="Cloud Deployment">Cloud Deployment</option>
-                  <option value="AI Consulting">AI Consulting</option>
-                </select>
-              </div>
+              <select
+                className="w-full px-4 py-3 rounded-lg bg-secondary/50"
+                value={formData.projectType}
+                onChange={(e) =>
+                  setFormData({ ...formData, projectType: e.target.value })
+                }
+              >
+                <option value="">Project Type</option>
+                <option>LLM / Generative AI</option>
+                <option>RAG Pipelines</option>
+                <option>Agentic AI</option>
+                <option>Computer Vision</option>
+                <option>ML Models</option>
+              </select>
 
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Message *
-                </label>
-                <textarea
-                  rows={4}
-                  placeholder="Tell me about your AI project..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
-                  disabled={isSubmitting}
-                  className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-foreground placeholder:text-muted-foreground disabled:opacity-50"
-                />
-              </div>
+              <textarea
+                rows={4}
+                placeholder="Your message *"
+                className="w-full px-4 py-3 rounded-lg bg-secondary/50"
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
+              />
 
-              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
-                )}
+              <Button type="submit" variant="hero" className="w-full">
+                <Send className="w-5 h-5" />
+                Send Message
               </Button>
             </form>
           </div>
